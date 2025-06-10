@@ -14,3 +14,32 @@ cd my-website
 git add .
 git commit -m "Update website"
 git push origin main
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+index 94237dbb264392c13a17a375892841726b39116f..5e9838f14cbc1a5e0d9cb3c7f11eca9cec0f4cd5 100644
+--- a/index.html
++++ b/index.html
+@@ -1,16 +1,11 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+-  <title>My Website</title>
++  <title>Sacred Forests</title>
++  <meta charset="UTF-8">
+ </head>
+ <body>
+-  <h1>Welcome to My Website</h1>
+-  <p>This is my first site hosted on GitHub Pages.</p>
++  <h1>Sacred Forests</h1>
++  <p>The Sacred Forests website highlights the importance of protecting forests that hold cultural and ecological value. Our goal is to share knowledge and resources so communities can join the effort to safeguard these unique spaces.</p>
+ </body>
+ </html>
+-git clone https://github.com/yourusername/my-website.git
+-cd my-website
+-# edit index.html
+-git add .
+-git commit -m "Update website"
+-git push origin main
+ 
+EOF
+)
