@@ -12,8 +12,6 @@ import { MapView } from "./pages/MapView";
 import { Database } from "./pages/Database";
 import { DistrictWise } from "./pages/DistrictWise";
 import { Articles } from "./pages/Articles";
-import { Resources } from "./pages/Resources";
-import { News } from "./pages/News";
 import { About } from "./pages/About";
 import { ReportThreat } from "./pages/ReportThreat";
 
@@ -34,8 +32,6 @@ function App() {
             <Route path="/database" element={<ProtectedRoute><Database /></ProtectedRoute>} />
             <Route path="/district-wise" element={<ProtectedRoute><DistrictWise /></ProtectedRoute>} />
             <Route path="/articles" element={<ProtectedRoute><Articles /></ProtectedRoute>} />
-            <Route path="/resources" element={<ProtectedRoute><Resources /></ProtectedRoute>} />
-            <Route path="/news" element={<ProtectedRoute><News /></ProtectedRoute>} />
             <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
             <Route path="/report-threat" element={<ProtectedRoute><ReportThreat /></ProtectedRoute>} />
           </Routes>

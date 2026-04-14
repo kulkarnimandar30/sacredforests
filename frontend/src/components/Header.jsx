@@ -14,8 +14,6 @@ export const Header = () => {
     { path: '/database', label: 'Sacred Groves', public: false },
     { path: '/district-wise', label: 'District-wise', public: false },
     { path: '/articles', label: 'Articles', public: false },
-    { path: '/resources', label: 'Resources', public: false },
-    { path: '/news', label: 'News', public: false },
     { path: '/about', label: 'About', public: false },
     { path: '/report-threat', label: 'Report Threat', public: false }
   ];

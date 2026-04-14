@@ -28,12 +28,24 @@ export const MapView = () => {
     }
   };
 
-  // Simple map visualization using positioned markers
+  // Map visualization optimized for Pune district
   const getMarkerPosition = (lat, lng) => {
-    // Convert lat/lng to percentage positions for simple visualization
-    const x = ((lng + 180) / 360) * 100;
-    const y = ((90 - lat) / 180) * 100;
-    return { left: `${x}%`, top: `${y}%` };
+    // Pune district bounds approximately:
+    // Latitude: 18.0° to 19.5°
+    // Longitude: 73.0° to 74.5°
+    const MIN_LAT = 18.0;
+    const MAX_LAT = 19.5;
+    const MIN_LNG = 73.0;
+    const MAX_LNG = 74.5;
+    
+    // Convert to percentage within Pune bounds with some padding
+    const x = ((lng - MIN_LNG) / (MAX_LNG - MIN_LNG)) * 80 + 10; // 10% padding on each side
+    const y = ((MAX_LAT - lat) / (MAX_LAT - MIN_LAT)) * 80 + 10; // Invert Y axis, add padding
+    
+    return { 
+      left: `${Math.max(5, Math.min(95, x))}%`, 
+      top: `${Math.max(5, Math.min(95, y))}%` 
+    };
   };
 
   return (
@@ -64,49 +76,59 @@ export const MapView = () => {
 
               {/* Map Area */}
               {loading ? (
-                <div className="h-[500px] flex items-center justify-center bg-gradient-to-br from-blue-100 via-green-50 to-emerald-100">
+                <div className="h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-100 via-green-50 to-emerald-100">
                   <div className="text-center">
                     <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                     <p className="text-gray-600">Loading map...</p>
                   </div>
                 </div>
               ) : (
-                <div className="relative bg-gradient-to-br from-blue-100 via-green-50 to-emerald-100 h-[500px] overflow-hidden">
-                  {/* Simplified map background */}
-                  <div className="absolute inset-0 opacity-20">
-                    <svg viewBox="0 0 1000 500" className="w-full h-full">
-                      <path d="M 100 100 Q 200 80 300 100 T 500 100 T 700 100 T 900 100" stroke="#059669" strokeWidth="2" fill="none" />
-                      <path d="M 150 200 Q 250 180 350 200 T 550 200 T 750 200" stroke="#059669" strokeWidth="2" fill="none" />
-                      <path d="M 100 300 Q 300 280 500 300 T 900 300" stroke="#059669" strokeWidth="2" fill="none" />
+                <div className="relative bg-gradient-to-br from-blue-100 via-green-50 to-emerald-100 h-[600px] overflow-hidden">
+                  {/* Pune district map representation */}
+                  <div className="absolute inset-0 opacity-10">
+                    <svg viewBox="0 0 1000 600" className="w-full h-full">
+                      {/* Simplified topographic lines for Pune district */}
+                      <path d="M 100 150 Q 300 120 500 150 T 900 150" stroke="#059669" strokeWidth="3" fill="none" />
+                      <path d="M 100 250 Q 300 220 500 250 T 900 250" stroke="#059669" strokeWidth="3" fill="none" />
+                      <path d="M 100 350 Q 300 320 500 350 T 900 350" stroke="#059669" strokeWidth="3" fill="none" />
+                      <path d="M 100 450 Q 300 420 500 450 T 900 450" stroke="#059669" strokeWidth="3" fill="none" />
+                      {/* Western Ghats representation */}
+                      <path d="M 200 100 L 250 200 L 200 300 L 250 400 L 200 500" stroke="#10b981" strokeWidth="4" fill="none" strokeDasharray="10,5" />
                     </svg>
                   </div>
 
-                  {/* Grove Markers */}
-                  {groves.map((grove) => {
+                  {/* Grove Markers - All 70 locations */}
+                  {groves.map((grove, index) => {
+                    if (!grove.coordinates) return null;
                     const position = getMarkerPosition(grove.coordinates.lat, grove.coordinates.lng);
+                    const isSelected = selectedGrove?._id === grove._id;
+                    
                     return (
                       <button
                         key={grove._id}
                         onClick={() => setSelectedGrove(grove)}
                         className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
                         style={position}
+                        title={grove.name}
                       >
-                        <div className={`relative ${selectedGrove?._id === grove._id ? 'z-10' : 'z-0'}`}>
-                          {/* Pulse animation */}
-                          <div className={`absolute inset-0 bg-emerald-500 rounded-full animate-ping ${selectedGrove?._id === grove._id ? 'opacity-75' : 'opacity-0'}`}></div>
+                        <div className={`relative ${isSelected ? 'z-20' : 'z-10'}`}>
+                          {/* Pulse animation for selected marker */}
+                          {isSelected && (
+                            <div className="absolute inset-0 bg-emerald-500 rounded-full animate-ping opacity-75"></div>
+                          )}
                           
                           {/* Marker */}
-                          <div className={`relative w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                            selectedGrove?._id === grove._id
-                              ? 'bg-emerald-600 scale-150 shadow-lg'
-                              : 'bg-emerald-500 group-hover:bg-emerald-600 group-hover:scale-125 shadow-md'
+                          <div className={`relative rounded-full flex items-center justify-center transition-all ${
+                            isSelected
+                              ? 'w-10 h-10 bg-emerald-600 shadow-xl scale-125'
+                              : 'w-6 h-6 bg-emerald-500 group-hover:bg-emerald-600 group-hover:scale-110 shadow-md'
                           }`}>
-                            <MapPin className="w-4 h-4 text-white" />
+                            <MapPin className={`${isSelected ? 'w-6 h-6' : 'w-4 h-4'} text-white`} />
                           </div>
 
-                          {/* Tooltip */}
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                            <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
+                          {/* Tooltip on hover */}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30">
+                            <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
                               {grove.name}
                             </div>
                             <div className="w-2 h-2 bg-gray-900 transform rotate-45 mx-auto -mt-1"></div>
@@ -117,18 +139,24 @@ export const MapView = () => {
                   })}
 
                   {/* Legend */}
-                  <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-4">
+                  <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-4 z-10">
                     <div className="flex items-center gap-2 mb-2">
                       <Info className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-semibold text-gray-900">Legend</span>
+                      <span className="text-sm font-semibold text-gray-900">Map Legend</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 mb-1">
                       <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                      <span className="text-xs text-gray-600">Sacred Grove</span>
+                      <span className="text-xs text-gray-600">Sacred Grove ({groves.length} total)</span>
                     </div>
                     <div className="text-xs text-gray-500 mt-2">
                       Click markers to view details
                     </div>
+                  </div>
+
+                  {/* District Label */}
+                  <div className="absolute top-4 left-4 bg-emerald-600 text-white px-4 py-2 rounded-lg shadow-lg z-10">
+                    <div className="text-sm font-semibold">Pune District</div>
+                    <div className="text-xs opacity-90">Maharashtra, India</div>
                   </div>
                 </div>
               )}

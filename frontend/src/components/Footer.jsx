@@ -55,19 +55,19 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Resources</h4>
+            <h4 className="text-white font-semibold mb-4">Information</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/articles" className="hover:text-emerald-400 transition-colors">Articles & Insights</Link>
               </li>
               <li>
-                <Link to="/resources" className="hover:text-emerald-400 transition-colors">Educational Resources</Link>
-              </li>
-              <li>
-                <Link to="/news" className="hover:text-emerald-400 transition-colors">Latest News</Link>
-              </li>
-              <li>
                 <Link to="/about" className="hover:text-emerald-400 transition-colors">About the Initiative</Link>
+              </li>
+              <li>
+                <a href="#" className="hover:text-emerald-400 transition-colors">Research Papers</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-emerald-400 transition-colors">Documentation</a>
               </li>
             </ul>
           </div>
