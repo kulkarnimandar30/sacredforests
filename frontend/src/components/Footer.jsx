@@ -13,10 +13,10 @@ export const Footer = () => {
               <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-2 rounded-lg">
                 <Leaf className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-white font-bold text-lg">CCA Network</h3>
+              <h3 className="text-white font-bold text-lg">Devrai</h3>
             </div>
             <p className="text-sm text-gray-400 mb-4">
-              Supporting community-led conservation efforts worldwide. Empowering local communities to protect and manage their natural heritage.
+              Documenting and preserving sacred groves across districts. Empowering communities to protect their natural and cultural heritage.
             </p>
             <div className="flex gap-3">
               <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-emerald-600 transition-colors">
@@ -42,13 +42,13 @@ export const Footer = () => {
                 <Link to="/map" className="hover:text-emerald-400 transition-colors">Interactive Map</Link>
               </li>
               <li>
-                <Link to="/database" className="hover:text-emerald-400 transition-colors">CCA Database</Link>
+                <Link to="/database" className="hover:text-emerald-400 transition-colors">Sacred Groves Database</Link>
               </li>
               <li>
-                <Link to="/articles" className="hover:text-emerald-400 transition-colors">Articles</Link>
+                <Link to="/district-wise" className="hover:text-emerald-400 transition-colors">District-wise Groves</Link>
               </li>
               <li>
-                <Link to="/resources" className="hover:text-emerald-400 transition-colors">Resources</Link>
+                <Link to="/report-threat" className="hover:text-emerald-400 transition-colors">Report Threats</Link>
               </li>
             </ul>
           </div>
@@ -58,19 +58,16 @@ export const Footer = () => {
             <h4 className="text-white font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">Documentation</a>
+                <Link to="/articles" className="hover:text-emerald-400 transition-colors">Articles & Insights</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">Research Papers</a>
+                <Link to="/resources" className="hover:text-emerald-400 transition-colors">Educational Resources</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">Case Studies</a>
+                <Link to="/news" className="hover:text-emerald-400 transition-colors">Latest News</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">Best Practices</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">Partner Network</a>
+                <Link to="/about" className="hover:text-emerald-400 transition-colors">About the Initiative</Link>
               </li>
             </ul>
           </div>
@@ -81,14 +78,14 @@ export const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-emerald-500" />
-                <a href="mailto:info@ccanetwork.org" className="hover:text-emerald-400 transition-colors">
-                  info@ccanetwork.org
+                <a href="mailto:info@devrai.org" className="hover:text-emerald-400 transition-colors">
+                  info@devrai.org
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Globe className="w-4 h-4 text-emerald-500" />
                 <a href="#" className="hover:text-emerald-400 transition-colors">
-                  www.ccanetwork.org
+                  www.devrai.org
                 </a>
               </li>
             </ul>
@@ -109,7 +106,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} CCA Network. All rights reserved. Built with care for community conservation.</p>
+          <p>&copy; {new Date().getFullYear()} Devrai - Sacred Groves Database. All rights reserved. Built with care for conservation.</p>
         </div>
       </div>
     </footer>
