@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Users, Globe, TrendingUp, ArrowRight, Leaf, Shield, Heart } from 'lucide-react';
-import { stats, communityConservedAreas } from '../mock';
 
 export const Home = () => {
-  const featuredCCAs = communityConservedAreas.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-white">
@@ -58,48 +56,48 @@ export const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
-                <Globe className="w-8 h-8 text-emerald-600" />
+                <Leaf className="w-8 h-8 text-emerald-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">{stats.totalCCAs}</div>
-              <div className="text-sm text-gray-600">CCAs Worldwide</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">5+</div>
+              <div className="text-sm text-gray-600">Sacred Groves</div>
             </div>
             
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 rounded-2xl mb-4">
                 <MapPin className="w-8 h-8 text-teal-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">{stats.areasProtected}</div>
-              <div className="text-sm text-gray-600">Area Protected</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
+              <div className="text-sm text-gray-600">Districts Covered</div>
             </div>
             
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4">
-                <Users className="w-8 h-8 text-green-600" />
+                <Shield className="w-8 h-8 text-green-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">{stats.communitiesInvolved}</div>
-              <div className="text-sm text-gray-600">People Involved</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">100%</div>
+              <div className="text-sm text-gray-600">Community Protected</div>
             </div>
             
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
                 <TrendingUp className="w-8 h-8 text-emerald-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">{stats.countriesRepresented}</div>
-              <div className="text-sm text-gray-600">Countries</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">Growing</div>
+              <div className="text-sm text-gray-600">Database</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What are CCAs Section */}
+      {/* What are Sacred Groves Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-emerald-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              What are Community Conserved Areas?
+              What are Sacred Groves?
             </h2>
             <p className="text-lg text-gray-600">
-              CCAs are natural and modified ecosystems, including significant biodiversity, ecological services, and cultural values, voluntarily conserved by indigenous peoples and local communities.
+              Sacred groves are patches of forest or natural vegetation dedicated to local deities and protected by communities through traditional beliefs, cultural practices, and indigenous knowledge systems.
             </p>
           </div>
 
@@ -108,9 +106,9 @@ export const Home = () => {
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mb-6">
                 <Shield className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Community Governed</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Cultural Heritage</h3>
               <p className="text-gray-600 leading-relaxed">
-                Managed by local communities and indigenous peoples using traditional knowledge and customary practices passed down through generations.
+                Protected by indigenous and local communities through customary laws and traditional practices passed down through generations, representing living repositories of cultural identity.
               </p>
             </div>
 
@@ -118,9 +116,9 @@ export const Home = () => {
               <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-green-600 rounded-xl flex items-center justify-center mb-6">
                 <Leaf className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Biodiversity Protection</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Biodiversity Hotspots</h3>
               <p className="text-gray-600 leading-relaxed">
-                Safeguarding critical ecosystems, endangered species, and genetic diversity while maintaining ecological balance and natural processes.
+                Serve as refuges for rare and endangered species, harboring rich biodiversity including medicinal plants, native trees, and unique ecosystems critical for conservation.
               </p>
             </div>
 
@@ -128,22 +126,22 @@ export const Home = () => {
               <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
                 <Heart className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Cultural Heritage</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Spiritual Significance</h3>
               <p className="text-gray-600 leading-relaxed">
-                Preserving sacred sites, traditional practices, and indigenous knowledge systems that are intrinsically linked to these landscapes.
+                Sacred sites associated with deities, ancestral worship, and spiritual practices that create a deep connection between communities and nature, ensuring long-term protection.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured CCAs */}
+      {/* Featured Sacred Groves */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-3">Featured CCAs</h2>
-              <p className="text-lg text-gray-600">Explore remarkable examples of community-led conservation</p>
+              <h2 className="text-4xl font-bold text-gray-900 mb-3">Explore Sacred Groves</h2>
+              <p className="text-lg text-gray-600">Discover documented sacred groves across India</p>
             </div>
             <Link
               to="/database"
@@ -154,48 +152,17 @@ export const Home = () => {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {featuredCCAs.map((cca) => (
-              <div key={cca.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100">
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={cca.image}
-                    alt={cca.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-xs font-semibold text-emerald-700">
-                    {cca.area}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                    <MapPin className="w-4 h-4" />
-                    {cca.location}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
-                    {cca.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {cca.description}
-                  </p>
-                  <Link
-                    to={`/database`}
-                    className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm hover:gap-3 transition-all"
-                  >
-                    Learn More
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8 md:hidden">
+          <div className="text-center py-12">
+            <Leaf className="w-16 h-16 text-emerald-300 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Login to Explore</h3>
+            <p className="text-gray-600 mb-6">
+              Access our comprehensive database of sacred groves by logging in
+            </p>
             <Link
-              to="/database"
-              className="inline-flex items-center gap-2 text-emerald-600 font-semibold hover:gap-3 transition-all"
+              to="/login"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition-all"
             >
-              View All CCAs
+              Login to Continue
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -206,23 +173,31 @@ export const Home = () => {
       <section className="py-20 bg-gradient-to-br from-emerald-600 to-teal-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Support Community Conservation
+            Support Sacred Grove Conservation
           </h2>
           <p className="text-xl text-emerald-50 mb-8 leading-relaxed">
-            Join the global movement to recognize, support, and strengthen community-led conservation initiatives worldwide.
+            Join the movement to document, preserve, and protect sacred groves across India. Help us build a comprehensive database for future generations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/resources"
+              to="/about"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-emerald-700 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
             >
-              Get Resources
+              Learn More
             </Link>
-            <a
-              href="#"
+            <Link
+              to="/report-threat"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-700 text-white border-2 border-white rounded-lg font-semibold hover:bg-emerald-800 transition-colors"
             >
-              Get Involved
+              Report Threats
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+nvolved
             </a>
           </div>
         </div>
