@@ -26,13 +26,13 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/map" element={<MapView />} />
+            <Route path="/database" element={<Database />} />
+            <Route path="/district-wise" element={<DistrictWise />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/about" element={<About />} />
             
-            {/* Protected Routes */}
-            <Route path="/map" element={<ProtectedRoute><MapView /></ProtectedRoute>} />
-            <Route path="/database" element={<ProtectedRoute><Database /></ProtectedRoute>} />
-            <Route path="/district-wise" element={<ProtectedRoute><DistrictWise /></ProtectedRoute>} />
-            <Route path="/articles" element={<ProtectedRoute><Articles /></ProtectedRoute>} />
-            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+            {/* Protected Routes - Only Report Threat */}
             <Route path="/report-threat" element={<ProtectedRoute><ReportThreat /></ProtectedRoute>} />
           </Routes>
           <Footer />

@@ -10,11 +10,11 @@ export const Header = () => {
 
   const navLinks = [
     { path: '/', label: 'Home', public: true },
-    { path: '/map', label: 'Interactive Map', public: false },
-    { path: '/database', label: 'Sacred Groves', public: false },
-    { path: '/district-wise', label: 'District-wise', public: false },
-    { path: '/articles', label: 'Articles', public: false },
-    { path: '/about', label: 'About', public: false },
+    { path: '/map', label: 'Interactive Map', public: true },
+    { path: '/database', label: 'Sacred Groves', public: true },
+    { path: '/district-wise', label: 'District-wise', public: true },
+    { path: '/articles', label: 'Articles', public: true },
+    { path: '/about', label: 'About', public: true },
     { path: '/report-threat', label: 'Report Threat', public: false }
   ];
 
@@ -42,7 +42,7 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.filter(link => link.public || isAuthenticated).map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -96,7 +96,7 @@ export const Header = () => {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-gray-100">
-            {navLinks.filter(link => link.public || isAuthenticated).map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}

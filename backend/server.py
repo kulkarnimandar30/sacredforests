@@ -297,11 +297,9 @@ async def reject_user(user_id: str, request: Request):
         raise HTTPException(status_code=404, detail="User not found")
     return {"message": "User rejected"}
 
-# ===== SACRED GROVES ROUTES =====
+# ===== SACRED GROVES ROUTES (PUBLIC) =====
 @api_router.get("/groves")
-async def get_groves(request: Request, district: Optional[str] = None, search: Optional[str] = None):
-    await get_current_user(request, db)
-    
+async def get_groves(district: Optional[str] = None, search: Optional[str] = None):
     query = {}
     if district and district != "all":
         query["district"] = district
@@ -317,8 +315,7 @@ async def get_groves(request: Request, district: Optional[str] = None, search: O
     return groves
 
 @api_router.get("/groves/{grove_id}")
-async def get_grove(grove_id: str, request: Request):
-    await get_current_user(request, db)
+async def get_grove(grove_id: str):
     grove = await db.sacred_groves.find_one({"_id": ObjectId(grove_id)})
     if not grove:
         raise HTTPException(status_code=404, detail="Grove not found")
@@ -326,16 +323,14 @@ async def get_grove(grove_id: str, request: Request):
     return grove
 
 @api_router.get("/groves/by-district/{district}")
-async def get_groves_by_district(district: str, request: Request):
-    await get_current_user(request, db)
+async def get_groves_by_district(district: str):
     groves = await db.sacred_groves.find({"district": district}).to_list(1000)
     for grove in groves:
         grove["_id"] = str(grove["_id"])
     return groves
 
 @api_router.get("/districts")
-async def get_districts(request: Request):
-    await get_current_user(request, db)
+async def get_districts():
     districts = await db.sacred_groves.distinct("district")
     return sorted(districts)
 
@@ -367,10 +362,9 @@ async def delete_grove(grove_id: str, request: Request):
         raise HTTPException(status_code=404, detail="Grove not found")
     return {"message": "Grove deleted"}
 
-# ===== ARTICLES ROUTES =====
+# ===== ARTICLES ROUTES (PUBLIC) =====
 @api_router.get("/articles")
-async def get_articles(request: Request, category: Optional[str] = None):
-    await get_current_user(request, db)
+async def get_articles(category: Optional[str] = None):
     query = {}
     if category and category != "all":
         query["category"] = category

@@ -30,9 +30,7 @@ export const DistrictWise = () => {
   const handleDistrictClick = async (district) => {
     setSelectedDistrict(district);
     try {
-      const { data } = await axios.get(`${BACKEND_URL}/api/groves/by-district/${district}`, {
-        withCredentials: true
-      });
+      const { data } = await axios.get(`${BACKEND_URL}/api/groves/by-district/${district}`);
       setGroves(data);
     } catch (error) {
       console.error('Error fetching groves:', error);

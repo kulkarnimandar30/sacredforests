@@ -17,9 +17,7 @@ export const MapView = () => {
 
   const fetchGroves = async () => {
     try {
-      const { data } = await axios.get(`${BACKEND_URL}/api/groves`, {
-        withCredentials: true
-      });
+      const { data } = await axios.get(`${BACKEND_URL}/api/groves`);
       setGroves(data);
     } catch (error) {
       console.error('Error fetching groves:', error);
