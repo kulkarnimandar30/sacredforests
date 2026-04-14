@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { MapPin, ZoomIn, Layers, Info } from 'lucide-react';
+import { MapPin, ZoomIn, Layers, Info, AlertTriangle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const MapView = () => {
   const [groves, setGroves] = useState([]);
   const [selectedGrove, setSelectedGrove] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -40,7 +42,7 @@ export const MapView = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Interactive Sacred Groves Map</h1>
-          <p className="text-lg text-gray-600">Explore sacred groves across India</p>
+          <p className="text-lg text-gray-600">Explore sacred groves across Pune District, Maharashtra</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -51,7 +53,7 @@ export const MapView = () => {
               <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Layers className="w-5 h-5 text-white" />
-                  <span className="text-white font-semibold">India Map View</span>
+                  <span className="text-white font-semibold">Pune District Map - Maharashtra</span>
                 </div>
                 <div className="flex gap-2">
                   <button className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors">
@@ -183,11 +185,21 @@ export const MapView = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Report Threat Button */}
+                  <button
+                    onClick={() => navigate(`/report-threat?grove=${selectedGrove._id}&name=${encodeURIComponent(selectedGrove.name)}`)}
+                    className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
+                  >
+                    <AlertTriangle className="w-5 h-5" />
+                    Report Threat to this Grove
+                  </button>
                 </div>
               ) : (
                 <div className="text-center py-12">
                   <MapPin className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-500">Click on any marker on the map to view detailed information about that sacred grove.</p>
+                  <p className="text-sm text-gray-400 mt-2">You can also report threats directly from the grove details.</p>
                 </div>
               )}
             </div>
@@ -198,19 +210,33 @@ export const MapView = () => {
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="text-2xl font-bold text-emerald-600">{groves.length}</div>
-            <div className="text-sm text-gray-600">Sacred Groves</div>
+            <div className="text-sm text-gray-600">Sacred Groves in Pune</div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="text-2xl font-bold text-teal-600">{new Set(groves.map(g => g.district)).size}</div>
             <div className="text-sm text-gray-600">Districts</div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-2xl font-bold text-green-600">5+</div>
-            <div className="text-sm text-gray-600">States</div>
+            <div className="text-2xl font-bold text-green-600">Maharashtra</div>
+            <div className="text-sm text-gray-600">State</div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="text-2xl font-bold text-emerald-600">100%</div>
             <div className="text-sm text-gray-600">Community-Protected</div>
+          </div>
+        </div>
+
+        {/* Map Legend & Instructions */}
+        <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-6 h-6 text-emerald-700 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-lg font-bold text-emerald-900 mb-2">Report Threats Directly from Map</h3>
+              <p className="text-emerald-800 text-sm leading-relaxed">
+                Click on any grove marker to view its details. If you notice any threats like construction, logging, or waste dumping, 
+                use the "Report Threat" button to notify authorities and conservation teams immediately.
+              </p>
+            </div>
           </div>
         </div>
       </div>

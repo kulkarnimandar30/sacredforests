@@ -58,7 +58,7 @@ export const Home = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
                 <Leaf className="w-8 h-8 text-emerald-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">5+</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">70+</div>
               <div className="text-sm text-gray-600">Sacred Groves</div>
             </div>
             
@@ -66,24 +66,24 @@ export const Home = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 rounded-2xl mb-4">
                 <MapPin className="w-8 h-8 text-teal-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">5</div>
-              <div className="text-sm text-gray-600">Districts Covered</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">Pune</div>
+              <div className="text-sm text-gray-600">District</div>
             </div>
             
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4">
                 <Shield className="w-8 h-8 text-green-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">100%</div>
-              <div className="text-sm text-gray-600">Community Protected</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">Maharashtra</div>
+              <div className="text-sm text-gray-600">State</div>
             </div>
             
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
                 <TrendingUp className="w-8 h-8 text-emerald-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">Growing</div>
-              <div className="text-sm text-gray-600">Database</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">100%</div>
+              <div className="text-sm text-gray-600">Community Protected</div>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@ export const Home = () => {
               What are Sacred Groves?
             </h2>
             <p className="text-lg text-gray-600">
-              Sacred groves are patches of forest or natural vegetation dedicated to local deities and protected by communities through traditional beliefs, cultural practices, and indigenous knowledge systems.
+              Sacred groves are patches of forest or natural vegetation in Maharashtra dedicated to local deities and protected by communities through traditional beliefs, cultural practices, and indigenous knowledge systems rooted in Maharashtra's rich cultural heritage.
             </p>
           </div>
 
@@ -176,7 +176,7 @@ export const Home = () => {
             Support Sacred Grove Conservation
           </h2>
           <p className="text-xl text-emerald-50 mb-8 leading-relaxed">
-            Join the movement to document, preserve, and protect sacred groves across India. Help us build a comprehensive database for future generations.
+            Join the movement to document, preserve, and protect sacred groves across Maharashtra. Help us build a comprehensive database for future generations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

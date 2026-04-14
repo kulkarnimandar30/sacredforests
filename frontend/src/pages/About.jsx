@@ -23,23 +23,23 @@ export const About = () => {
           <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
             <p className="leading-relaxed">
               <strong className="text-emerald-700">Devrai</strong> (देवराई) is a Marathi word meaning "sacred grove" — 
-              patches of forest or natural vegetation dedicated to local deities and protected by communities through 
+              patches of forest or natural vegetation in Maharashtra dedicated to local deities and protected by communities through 
               traditional beliefs and practices. These sacred groves represent a unique intersection of cultural heritage, 
-              spiritual significance, and biodiversity conservation.
+              spiritual significance, and biodiversity conservation in Maharashtra.
             </p>
 
             <p className="leading-relaxed">
-              Our initiative aims to create a comprehensive, district-wise database of sacred groves, documenting their 
-              natural history, present status, threats, and cultural significance. By bringing together researchers, 
-              conservationists, local communities, and policymakers, we strive to ensure the protection and preservation 
-              of these invaluable ecosystems for future generations.
+              Our initiative aims to create a comprehensive database of sacred groves across Maharashtra, particularly in the 
+              Pune district, documenting their natural history, present status, threats, and cultural significance. By bringing 
+              together researchers, conservationists, local communities, and policymakers, we strive to ensure the protection 
+              and preservation of these invaluable ecosystems for future generations.
             </p>
 
             <p className="leading-relaxed">
-              Sacred groves serve as biodiversity hotspots, often harboring rare and endangered plant and animal species. 
-              They also play crucial roles in watershed protection, climate regulation, and maintaining ecological balance. 
-              Beyond their environmental value, these groves are living repositories of indigenous knowledge, traditional 
-              practices, and cultural identity.
+              Sacred groves in Maharashtra serve as biodiversity hotspots, often harboring rare and endangered plant and animal 
+              species. They also play crucial roles in watershed protection, climate regulation, and maintaining ecological balance 
+              in the Western Ghats region. Beyond their environmental value, these groves are living repositories of indigenous 
+              knowledge, traditional practices, and Maharashtrian cultural identity.
             </p>
           </div>
         </div>

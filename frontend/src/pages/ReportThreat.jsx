@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AlertTriangle, CheckCircle, MapPin } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useSearchParams } from 'react-router-dom';
 
 export const ReportThreat = () => {
   const [groves, setGroves] = useState([]);
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     grove_id: '',
     grove_name: '',
@@ -46,6 +48,13 @@ export const ReportThreat = () => {
         grove_id: groveId,
         grove_name: selectedGrove.name,
         district: selectedGrove.district
+      });
+    } else {
+      setFormData({
+        ...formData,
+        grove_id: '',
+        grove_name: '',
+        district: ''
       });
     }
   };
