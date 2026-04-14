@@ -177,12 +177,13 @@ async def login(credentials: UserLogin, response: Response, request: Request):
     access_token = create_access_token(user_id, email)
     refresh_token = create_refresh_token(user_id)
     
-    # Set cookies
+    # Set cookies (secure=True for production HTTPS)
+    is_production = os.environ.get("FRONTEND_URL", "").startswith("https://")
     response.set_cookie(
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=False,
+        secure=is_production,
         samesite="lax",
         max_age=900,
         path="/"
@@ -191,7 +192,7 @@ async def login(credentials: UserLogin, response: Response, request: Request):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=False,
+        secure=is_production,
         samesite="lax",
         max_age=604800,
         path="/"
@@ -249,11 +250,12 @@ async def refresh_token(request: Request, response: Response):
         user_id = str(user["_id"])
         new_access_token = create_access_token(user_id, user["email"])
         
+        is_production = os.environ.get("FRONTEND_URL", "").startswith("https://")
         response.set_cookie(
             key="access_token",
             value=new_access_token,
             httponly=True,
-            secure=False,
+            secure=is_production,
             samesite="lax",
             max_age=900,
             path="/"
@@ -457,11 +459,9 @@ async def root():
 app.include_router(api_router)
 
 # CORS Configuration
-cors_origins = os.environ.get('CORS_ORIGINS', '*')
-if cors_origins == '*':
-    origins = ["*"]
-else:
-    origins = cors_origins.split(',')
+# Note: Cannot use wildcard '*' with allow_credentials=True
+cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000')
+origins = [origin.strip() for origin in cors_origins.split(',')]
 
 app.add_middleware(
     CORSMiddleware,
