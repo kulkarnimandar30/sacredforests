@@ -16,7 +16,7 @@ export const Home = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6">
               <Leaf className="w-4 h-4 text-emerald-600" />
-              <span className="text-sm font-medium text-gray-700">Community-Led Conservation</span>
+              <span className="text-sm font-medium text-gray-700">Sacred Groves Conservation</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
@@ -191,14 +191,6 @@ export const Home = () => {
             >
               Report Threats
             </Link>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-nvolved
-            </a>
           </div>
         </div>
       </section>

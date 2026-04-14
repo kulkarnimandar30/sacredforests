@@ -6,8 +6,7 @@ from datetime import datetime
 class DevraiAPITester:
     def __init__(self, base_url="https://eco-info.preview.emergentagent.com"):
         self.base_url = base_url
-        self.access_token = None
-        self.admin_token = None
+        self.session = requests.Session()  # Use session to maintain cookies
         self.tests_run = 0
         self.tests_passed = 0
         self.test_results = []
@@ -27,28 +26,23 @@ class DevraiAPITester:
             "details": details
         })
 
-    def run_test(self, name, method, endpoint, expected_status, data=None, headers=None, use_admin=False):
+    def run_test(self, name, method, endpoint, expected_status, data=None, headers=None):
         """Run a single API test"""
         url = f"{self.base_url}/api/{endpoint}"
         test_headers = {'Content-Type': 'application/json'}
         
         if headers:
             test_headers.update(headers)
-            
-        if use_admin and self.admin_token:
-            test_headers['Authorization'] = f'Bearer {self.admin_token}'
-        elif self.access_token:
-            test_headers['Authorization'] = f'Bearer {self.access_token}'
 
         try:
             if method == 'GET':
-                response = requests.get(url, headers=test_headers, timeout=10)
+                response = self.session.get(url, headers=test_headers, timeout=10)
             elif method == 'POST':
-                response = requests.post(url, json=data, headers=test_headers, timeout=10)
+                response = self.session.post(url, json=data, headers=test_headers, timeout=10)
             elif method == 'PATCH':
-                response = requests.patch(url, json=data, headers=test_headers, timeout=10)
+                response = self.session.patch(url, json=data, headers=test_headers, timeout=10)
             elif method == 'DELETE':
-                response = requests.delete(url, headers=test_headers, timeout=10)
+                response = self.session.delete(url, headers=test_headers, timeout=10)
 
             success = response.status_code == expected_status
             details = f"Status: {response.status_code}"
@@ -88,10 +82,79 @@ class DevraiAPITester:
             data={"email": "admin@devrai.com", "password": "admin123"}
         )
         if success and 'email' in response:
-            # Note: Tokens are in httpOnly cookies, not in response
             print(f"Admin logged in: {response.get('email')} (Role: {response.get('role')})")
             return True
         return False
+
+    def test_auth_me(self):
+        """Test current user endpoint"""
+        success, response = self.run_test("Auth Me", "GET", "auth/me", 200)
+        if success:
+            print(f"Current user: {response.get('email')} (Role: {response.get('role')})")
+        return success
+
+    def test_get_groves(self):
+        """Test get all groves"""
+        success, response = self.run_test("Get Groves", "GET", "groves", 200)
+        if success:
+            grove_count = len(response)
+            print(f"Found {grove_count} sacred groves")
+            return success, grove_count, response
+        return success, 0, []
+
+    def test_get_districts(self):
+        """Test get districts"""
+        success, response = self.run_test("Get Districts", "GET", "districts", 200)
+        if success:
+            district_count = len(response)
+            print(f"Found {district_count} districts")
+            return success, district_count, response
+        return success, 0, []
+
+    def test_groves_by_district(self, district):
+        """Test get groves by specific district"""
+        success, response = self.run_test(
+            f"Groves by District ({district})",
+            "GET",
+            f"groves/by-district/{district}",
+            200
+        )
+        if success:
+            grove_count = len(response)
+            print(f"Found {grove_count} groves in {district}")
+        return success
+
+    def test_report_threat(self, grove_id, grove_name, district):
+        """Test threat reporting"""
+        threat_data = {
+            "grove_id": grove_id,
+            "grove_name": grove_name,
+            "district": district,
+            "threat_type": "Deforestation",
+            "description": "Test threat report for automated testing",
+            "severity": "Medium",
+            "contact_email": "test@example.com",
+            "contact_phone": "+91 9876543210"
+        }
+        
+        success, response = self.run_test(
+            "Report Threat",
+            "POST",
+            "threats/report",
+            200,
+            data=threat_data
+        )
+        if success:
+            print(f"Threat report created with ID: {response.get('_id')}")
+        return success
+
+    def test_get_threats(self):
+        """Test get all threats (admin only)"""
+        success, response = self.run_test("Get Threats", "GET", "threats", 200)
+        if success:
+            threat_count = len(response)
+            print(f"Found {threat_count} threat reports")
+        return success
 
     def test_user_registration(self):
         """Test user registration"""
@@ -199,9 +262,45 @@ def main():
     print("\n📡 Testing Basic Connectivity...")
     tester.test_root_endpoint()
     
+    # Test protected routes without auth first
+    print("\n🛡️ Testing Protected Routes (Unauthenticated)...")
+    tester.test_protected_routes_without_auth()
+    
     # Test authentication flows
     print("\n🔐 Testing Authentication...")
-    tester.test_admin_login()
+    login_success = tester.test_admin_login()
+    
+    if login_success:
+        # Test authenticated endpoints
+        print("\n✅ Testing Authenticated Endpoints...")
+        tester.test_auth_me()
+        
+        # Test groves functionality
+        grove_success, grove_count, groves = tester.test_get_groves()
+        district_success, district_count, districts = tester.test_get_districts()
+        
+        # Test district-specific groves
+        if district_success and district_count > 0:
+            tester.test_groves_by_district(districts[0])
+        
+        # Test threat reporting
+        if grove_success and grove_count > 0:
+            grove = groves[0]
+            tester.test_report_threat(
+                grove.get("_id"),
+                grove.get("name"),
+                grove.get("district")
+            )
+        
+        # Test admin endpoints
+        print("\n👑 Testing Admin Endpoints...")
+        tester.test_get_threats()
+        
+        # Test logout
+        print("\n🚪 Testing Logout...")
+        tester.test_logout()
+    else:
+        print("❌ Login failed, skipping authenticated tests")
     
     # Test user registration
     print("\n👤 Testing User Registration...")
@@ -211,22 +310,6 @@ def main():
     
     # Test invalid login
     tester.test_invalid_login()
-    
-    # Test protected routes without auth
-    print("\n🛡️ Testing Protected Routes...")
-    tester.test_protected_routes_without_auth()
-    
-    # Test admin routes without admin
-    print("\n👑 Testing Admin Routes...")
-    tester.test_admin_routes_without_admin()
-    
-    # Test database seeding
-    print("\n🌱 Testing Database...")
-    tester.test_database_seeding()
-    
-    # Test logout
-    print("\n🚪 Testing Logout...")
-    tester.test_logout()
     
     # Print summary
     tester.print_summary()

@@ -124,7 +124,6 @@ class ThreatReportCreate(BaseModel):
     threat_type: str
     description: str
     severity: str  # Low, Medium, High, Critical
-    reported_by: str  # user email
     contact_email: Optional[str] = ""
     contact_phone: Optional[str] = ""
 
