@@ -27,7 +27,7 @@ export const Home = () => {
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Explore Devrai - a comprehensive database of sacred groves in Pune District, Maharashtra. Documenting natural history, biodiversity, and cultural significance of these ancient ecosystems protected by local communities.
+              Explore Devrai - a comprehensive database of 288 sacred groves across 10 districts in Maharashtra. Documenting natural history, biodiversity, and cultural significance of these ancient ecosystems protected by local communities.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -58,7 +58,7 @@ export const Home = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
                 <Leaf className="w-8 h-8 text-emerald-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">70+</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">288</div>
               <div className="text-sm text-gray-600">Sacred Groves</div>
             </div>
             
@@ -66,8 +66,8 @@ export const Home = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 rounded-2xl mb-4">
                 <MapPin className="w-8 h-8 text-teal-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">Pune</div>
-              <div className="text-sm text-gray-600">District</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">10</div>
+              <div className="text-sm text-gray-600">Districts</div>
             </div>
             
             <div className="text-center">

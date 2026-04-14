@@ -84,7 +84,7 @@ export const Database = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Sacred Groves Database</h1>
-          <p className="text-lg text-gray-600">Browse our comprehensive database of sacred groves in Pune District, Maharashtra</p>
+          <p className="text-lg text-gray-600">Browse our comprehensive database of 288 sacred groves across 10 districts in Maharashtra</p>
         </div>
 
         {/* Search and Filters */}

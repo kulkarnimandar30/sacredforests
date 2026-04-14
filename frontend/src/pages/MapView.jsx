@@ -52,7 +52,7 @@ export const MapView = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Interactive Sacred Groves Map</h1>
-          <p className="text-lg text-gray-600">Explore sacred groves across Pune District, Maharashtra</p>
+          <p className="text-lg text-gray-600">Explore 288 sacred groves across 10 districts in Maharashtra</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -63,7 +63,7 @@ export const MapView = () => {
               <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Layers className="w-5 h-5 text-white" />
-                  <span className="text-white font-semibold">Pune District Map - Maharashtra</span>
+                  <span className="text-white font-semibold">Maharashtra - 10 Districts</span>
                 </div>
                 <div className="flex gap-2">
                   <button className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors">
@@ -153,8 +153,8 @@ export const MapView = () => {
 
                   {/* District Label */}
                   <div className="absolute top-4 left-4 bg-emerald-600 text-white px-4 py-2 rounded-lg shadow-lg z-10">
-                    <div className="text-sm font-semibold">Pune District</div>
-                    <div className="text-xs opacity-90">Maharashtra, India</div>
+                    <div className="text-sm font-semibold">Maharashtra</div>
+                    <div className="text-xs opacity-90">10 Districts - 288 Sacred Groves</div>
                   </div>
                 </div>
               )}
@@ -236,7 +236,7 @@ export const MapView = () => {
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="text-2xl font-bold text-emerald-600">{groves.length}</div>
-            <div className="text-sm text-gray-600">Sacred Groves in Pune</div>
+            <div className="text-sm text-gray-600">Sacred Groves</div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="text-2xl font-bold text-teal-600">{new Set(groves.map(g => g.district)).size}</div>
@@ -260,7 +260,7 @@ export const MapView = () => {
               <h3 className="text-lg font-bold text-emerald-900 mb-2">Report Threats Directly from Map</h3>
               <p className="text-emerald-800 text-sm leading-relaxed">
                 Click on any grove marker to view its details. If you notice any threats like construction, logging, or waste dumping, 
-                use the "Report Threat" button to notify authorities and conservation teams immediately.
+                use the "Report Threat" button to notify authorities and conservation teams immediately. Covers 288 sacred groves across Bhandara, Chandrapur, Jalgaon, Kolaba, Kolhapur, Pune, Ratnagiri, Satara, Thana, and Yeotmal districts.
               </p>
             </div>
           </div>
