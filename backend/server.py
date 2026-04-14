@@ -271,10 +271,10 @@ async def refresh_token(request: Request, response: Response):
 @api_router.get("/admin/users")
 async def get_all_users(request: Request):
     await get_current_admin(request, db)
-    users = await db.users.find().to_list(1000)
+    # Don't fetch password_hash from database
+    users = await db.users.find({}, {"password_hash": 0}).to_list(1000)
     for user in users:
         user["_id"] = str(user["_id"])
-        user.pop("password_hash", None)
     return users
 
 @api_router.patch("/admin/users/{user_id}/approve")
@@ -311,7 +311,8 @@ async def get_groves(district: Optional[str] = None, search: Optional[str] = Non
             {"district": {"$regex": search, "$options": "i"}}
         ]
     
-    groves = await db.sacred_groves.find(query).to_list(1000)
+    # Fetch only necessary fields (exclude _id will be converted to string anyway)
+    groves = await db.sacred_groves.find(query, {"_id": 1, "name": 1, "district": 1, "coordinates": 1, "location": 1, "natural_history": 1, "present_status": 1, "threats": 1, "references": 1, "image": 1, "created_at": 1}).to_list(1000)
     for grove in groves:
         grove["_id"] = str(grove["_id"])
     return groves
@@ -326,7 +327,8 @@ async def get_grove(grove_id: str):
 
 @api_router.get("/groves/by-district/{district}")
 async def get_groves_by_district(district: str):
-    groves = await db.sacred_groves.find({"district": district}).to_list(1000)
+    # Fetch only necessary fields
+    groves = await db.sacred_groves.find({"district": district}, {"_id": 1, "name": 1, "district": 1, "coordinates": 1, "location": 1, "natural_history": 1, "present_status": 1, "threats": 1, "references": 1, "image": 1, "created_at": 1}).to_list(1000)
     for grove in groves:
         grove["_id"] = str(grove["_id"])
     return groves
@@ -460,12 +462,24 @@ app.include_router(api_router)
 
 # CORS Configuration
 # Note: Cannot use wildcard '*' with allow_credentials=True
-cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000')
-origins = [origin.strip() for origin in cors_origins.split(',')]
+cors_origins_env = os.environ.get('CORS_ORIGINS', 'http://localhost:3000')
+origins = [origin.strip() for origin in cors_origins_env.split(',')]
+
+# Expand wildcard patterns for emergent.host
+final_origins = []
+for origin in origins:
+    if '*.emergent.host' in origin:
+        # Add common emergent.host patterns
+        final_origins.extend([
+            'https://eco-info.emergent.host',
+            'https://eco-info.preview.emergentagent.com'
+        ])
+    else:
+        final_origins.append(origin)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=final_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
