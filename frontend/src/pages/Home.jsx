@@ -16,18 +16,18 @@ export const Home = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6">
               <Leaf className="w-4 h-4 text-emerald-600" />
-              <span className="text-sm font-medium text-gray-700">Sacred Groves Conservation</span>
+              <span className="text-sm font-medium text-gray-700">Participatory Sacred Grove Conservation Initiative</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Protecting Nature Through
+              Sacred Grove
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
-                Community Action
+                Database
               </span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Discover and support Community Conserved Areas (CCAs) worldwide—territories and ecosystems voluntarily conserved by indigenous peoples and local communities.
+              Explore Devrai - a comprehensive database of sacred groves in Pune District, Maharashtra. Documenting natural history, biodiversity, and cultural significance of these ancient ecosystems protected by local communities.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -97,7 +97,7 @@ export const Home = () => {
               What are Sacred Groves?
             </h2>
             <p className="text-lg text-gray-600">
-              Sacred groves are patches of forest or natural vegetation in Maharashtra dedicated to local deities and protected by communities through traditional beliefs, cultural practices, and indigenous knowledge systems rooted in Maharashtra's rich cultural heritage.
+              Sacred Groves are patches of forest or natural vegetation dedicated to local deities and protected by communities through traditional beliefs, cultural practices where indigenous knowledge systems are rooted in forest conservation.
             </p>
           </div>
 
