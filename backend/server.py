@@ -463,10 +463,15 @@ async def root():
 app.include_router(api_router)
 
 # CORS Configuration
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+cors_origins = os.environ.get('CORS_ORIGINS', '*')
+if cors_origins == '*':
+    origins = ["*"]
+else:
+    origins = cors_origins.split(',')
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url] if frontend_url else ["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
