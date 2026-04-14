@@ -14,6 +14,13 @@ export const DistrictWise = () => {
     fetchDistricts();
   }, []);
 
+  useEffect(() => {
+    // Auto-select first district (Pune) when districts are loaded
+    if (districts.length > 0 && !selectedDistrict) {
+      handleDistrictClick(districts[0]);
+    }
+  }, [districts]);
+
   const fetchDistricts = async () => {
     try {
       const { data } = await axios.get(`${BACKEND_URL}/api/districts`, {
