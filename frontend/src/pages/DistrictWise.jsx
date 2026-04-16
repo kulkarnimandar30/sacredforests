@@ -48,8 +48,8 @@ export const DistrictWise = () => {
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">District-wise Sacred Groves</h1>
-          <p className="text-lg text-gray-600">Explore sacred groves organized by district</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">District Wise SGs</h1>
+          <p className="text-lg text-gray-600">Participatory Sacred Grove Database - Maharashtra</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">

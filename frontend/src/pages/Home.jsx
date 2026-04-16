@@ -141,7 +141,7 @@ export const Home = () => {
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-3">Explore Sacred Groves</h2>
-              <p className="text-lg text-gray-600">Discover documented sacred groves across India</p>
+              <p className="text-lg text-gray-600">Discover documented sacred groves across Maharashtra</p>
             </div>
             <Link
               to="/database"

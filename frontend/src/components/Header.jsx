@@ -12,7 +12,7 @@ export const Header = () => {
     { path: '/', label: 'Home', public: true },
     { path: '/map', label: 'Interactive Map', public: true },
     { path: '/database', label: 'Sacred Groves', public: true },
-    { path: '/district-wise', label: 'District-wise', public: true },
+    { path: '/district-wise', label: 'District Wise SGs', public: true },
     { path: '/articles', label: 'Articles', public: true },
     { path: '/about', label: 'About', public: true },
     { path: '/report-threat', label: 'Report Threat', public: false }
