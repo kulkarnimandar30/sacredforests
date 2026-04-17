@@ -461,25 +461,13 @@ async def root():
 app.include_router(api_router)
 
 # CORS Configuration
-# Note: Cannot use wildcard '*' with allow_credentials=True
+# Support specific origins for production
 cors_origins_env = os.environ.get('CORS_ORIGINS', 'http://localhost:3000')
 origins = [origin.strip() for origin in cors_origins_env.split(',')]
 
-# Expand wildcard patterns for emergent.host
-final_origins = []
-for origin in origins:
-    if '*.emergent.host' in origin:
-        # Add common emergent.host patterns
-        final_origins.extend([
-            'https://eco-info.emergent.host',
-            'https://eco-info.preview.emergentagent.com'
-        ])
-    else:
-        final_origins.append(origin)
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=final_origins,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
