@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, Target, Users, Heart, BookOpen, Shield } from 'lucide-react';
+import { Trees, Target, Users, Heart, BookOpen, Shield } from 'lucide-react';
 
 export const About = () => {
   return (
@@ -8,7 +8,7 @@ export const About = () => {
         {/* Header */}
         <div className="mb-12 text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl mb-6">
-            <Leaf className="w-10 h-10 text-white" />
+            <Trees className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">About Devrai</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">

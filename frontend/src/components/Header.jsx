@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Leaf, Menu, X, LogOut, User } from 'lucide-react';
+import { Trees, Menu, X, LogOut, User } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Header = () => {
@@ -32,7 +32,7 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-2 rounded-lg transition-transform group-hover:scale-105">
-              <Leaf className="w-6 h-6 text-white" />
+              <Trees className="w-6 h-6 text-white" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Devrai</h1>

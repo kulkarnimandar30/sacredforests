@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Users, Globe, TrendingUp, ArrowRight, Leaf, Shield, Heart } from 'lucide-react';
+import { MapPin, Users, Globe, TrendingUp, ArrowRight, Trees, Shield, Heart } from 'lucide-react';
 
 export const Home = () => {
 
@@ -15,7 +15,7 @@ export const Home = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6">
-              <Leaf className="w-4 h-4 text-emerald-600" />
+              <Trees className="w-4 h-4 text-emerald-600" />
               <span className="text-sm font-medium text-gray-700">Participatory Sacred Grove Conservation Initiative</span>
             </div>
             
@@ -56,7 +56,7 @@ export const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-4">
-                <Leaf className="w-8 h-8 text-emerald-600" />
+                <Trees className="w-8 h-8 text-emerald-600" />
               </div>
               <div className="text-3xl font-bold text-gray-900 mb-1">288</div>
               <div className="text-sm text-gray-600">Sacred Groves</div>
@@ -114,7 +114,7 @@ export const Home = () => {
 
             <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-green-600 rounded-xl flex items-center justify-center mb-6">
-                <Leaf className="w-7 h-7 text-white" />
+                <Trees className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Biodiversity Hotspots</h3>
               <p className="text-gray-600 leading-relaxed">
@@ -153,7 +153,7 @@ export const Home = () => {
           </div>
 
           <div className="text-center py-12">
-            <Leaf className="w-16 h-16 text-emerald-300 mx-auto mb-4" />
+            <Trees className="w-16 h-16 text-emerald-300 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Login to Explore</h3>
             <p className="text-gray-600 mb-6">
               Access our comprehensive database of sacred groves by logging in

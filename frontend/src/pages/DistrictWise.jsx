@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { MapPin, ChevronRight, Leaf } from 'lucide-react';
+import { MapPin, Search, Trees, ChevronDown } from 'lucide-react';
 
 export const DistrictWise = () => {
   const [districts, setDistricts] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState('');
   const [groves, setGroves] = useState([]);
+  const [filteredGroves, setFilteredGroves] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -15,18 +18,35 @@ export const DistrictWise = () => {
   }, []);
 
   useEffect(() => {
-    // Auto-select first district (Pune) when districts are loaded
-    if (districts.length > 0 && !selectedDistrict) {
-      handleDistrictClick(districts[0]);
+    if (selectedDistrict) {
+      fetchGrovesByDistrict(selectedDistrict);
     }
-  }, [districts]);
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    // Filter groves based on search term
+    if (searchTerm.trim() === '') {
+      setFilteredGroves(groves);
+    } else {
+      const filtered = groves.filter(grove =>
+        grove.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        grove.natural_history?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        grove.present_status?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredGroves(filtered);
+    }
+  }, [searchTerm, groves]);
 
   const fetchDistricts = async () => {
     try {
       const { data } = await axios.get(`${BACKEND_URL}/api/districts`, {
         withCredentials: true
       });
-      setDistricts(data);
+      const sortedDistricts = data.sort();
+      setDistricts(sortedDistricts);
+      if (sortedDistricts.length > 0) {
+        setSelectedDistrict(sortedDistricts[0]);
+      }
     } catch (error) {
       console.error('Error fetching districts:', error);
     } finally {
@@ -34,14 +54,20 @@ export const DistrictWise = () => {
     }
   };
 
-  const handleDistrictClick = async (district) => {
-    setSelectedDistrict(district);
+  const fetchGrovesByDistrict = async (district) => {
     try {
       const { data } = await axios.get(`${BACKEND_URL}/api/groves/by-district/${district}`);
       setGroves(data);
+      setFilteredGroves(data);
     } catch (error) {
       console.error('Error fetching groves:', error);
     }
+  };
+
+  const handleDistrictChange = (district) => {
+    setSelectedDistrict(district);
+    setSearchTerm('');
+    setDropdownOpen(false);
   };
 
   return (
@@ -52,109 +78,176 @@ export const DistrictWise = () => {
           <p className="text-lg text-gray-600">Participatory Sacred Grove Database - Maharashtra</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Districts List */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-md p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Select District</h2>
-              
-              {loading ? (
-                <div className="text-center py-8">
-                  <div className="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                </div>
-              ) : (
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {districts.map((district) => (
-                    <button
-                      key={district}
-                      onClick={() => handleDistrictClick(district)}
-                      className={`w-full text-left px-4 py-3 rounded-lg transition-all flex items-center justify-between ${
-                        selectedDistrict === district
-                          ? 'bg-emerald-50 text-emerald-700 font-semibold'
-                          : 'hover:bg-gray-50 text-gray-700'
-                      }`}
-                    >
-                      <span>{district}</span>
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  ))}
-                </div>
-              )}
+        {/* Filters Section */}
+        <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* District Dropdown */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Select District
+              </label>
+              <div className="relative">
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-emerald-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                >
+                  <span className="text-gray-900 font-medium">
+                    {selectedDistrict || 'Choose a district...'}
+                  </span>
+                  <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute z-10 w-full mt-2 bg-white border-2 border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+                    {districts.map((district) => (
+                      <button
+                        key={district}
+                        onClick={() => handleDistrictChange(district)}
+                        className={`w-full px-4 py-3 text-left hover:bg-emerald-50 transition-colors ${
+                          selectedDistrict === district ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'text-gray-700'
+                        }`}
+                      >
+                        {district}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Search Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Search Sacred Groves
+              </label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search by name, history, or status..."
+                  className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-emerald-500 transition-colors"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Groves List */}
-          <div className="lg:col-span-2">
-            {!selectedDistrict ? (
-              <div className="text-center py-20">
-                <Leaf className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Select a District</h3>
-                <p className="text-gray-600">Choose a district from the list to view its sacred groves</p>
-              </div>
-            ) : groves.length === 0 ? (
-              <div className="text-center py-20">
-                <Leaf className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Groves Found</h3>
-                <p className="text-gray-600">No sacred groves recorded in {selectedDistrict} district</p>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {selectedDistrict} District
-                  <span className="text-sm font-normal text-gray-600 ml-3">
-                    ({groves.length} {groves.length === 1 ? 'grove' : 'groves'})
-                  </span>
-                </h2>
+          {/* Results Count */}
+          {selectedDistrict && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <p className="text-sm text-gray-600">
+                Showing <span className="font-semibold text-emerald-700">{filteredGroves.length}</span> of{' '}
+                <span className="font-semibold">{groves.length}</span> sacred groves in {selectedDistrict} district
+              </p>
+            </div>
+          )}
+        </div>
 
-                <div className="grid gap-6">
-                  {groves.map((grove) => (
-                    <div key={grove._id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">{grove.name}</h3>
-                        
-                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                          <MapPin className="w-4 h-4 text-emerald-600" />
-                          {grove.district}
-                          {grove.coordinates && (
-                            <span className="ml-2 text-xs text-gray-500 font-mono">
-                              ({grove.coordinates.lat.toFixed(4)}, {grove.coordinates.lng.toFixed(4)})
-                            </span>
-                          )}
+        {/* Groves Display */}
+        {loading ? (
+          <div className="text-center py-20">
+            <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading districts...</p>
+          </div>
+        ) : !selectedDistrict ? (
+          <div className="text-center py-20">
+            <Trees className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Select a District</h3>
+            <p className="text-gray-600">Choose a district from the dropdown to view its sacred groves</p>
+          </div>
+        ) : filteredGroves.length === 0 ? (
+          <div className="text-center py-20">
+            <Trees className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Groves Found</h3>
+            <p className="text-gray-600">
+              {searchTerm ? 'No sacred groves match your search criteria' : `No sacred groves recorded in ${selectedDistrict} district`}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {filteredGroves.map((grove, index) => (
+              <div key={grove._id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                          <Trees className="w-5 h-5 text-emerald-600" />
                         </div>
-
-                        <div className="space-y-3">
-                          <div>
-                            <div className="text-xs font-semibold text-gray-500 uppercase mb-1">Natural History</div>
-                            <p className="text-sm text-gray-900 leading-relaxed">{grove.natural_history}</p>
-                          </div>
-
-                          <div>
-                            <div className="text-xs font-semibold text-gray-500 uppercase mb-1">Present Status</div>
-                            <p className="text-sm text-gray-900">{grove.present_status}</p>
-                          </div>
-
-                          {grove.threats && (
-                            <div>
-                              <div className="text-xs font-semibold text-gray-500 uppercase mb-1">Threats</div>
-                              <p className="text-sm text-red-700">{grove.threats}</p>
-                            </div>
-                          )}
-
-                          {grove.references && (
-                            <div>
-                              <div className="text-xs font-semibold text-gray-500 uppercase mb-1">References</div>
-                              <p className="text-sm text-gray-700 italic">{grove.references}</p>
-                            </div>
-                          )}
-                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900">{grove.name}</h3>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin className="w-4 h-4 text-emerald-600" />
+                        <span className="font-medium">{grove.district} District</span>
+                        {grove.coordinates && (
+                          <span className="ml-2 text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+                            {grove.coordinates.lat.toFixed(6)}, {grove.coordinates.lng.toFixed(6)}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  ))}
+                    
+                    <div className="text-right">
+                      <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-800">
+                        SG #{index + 1}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  {grove.location && (
+                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="text-xs font-semibold text-gray-500 uppercase mb-1">GPS Location</div>
+                      <p className="text-sm text-gray-700 font-mono">{grove.location}</p>
+                    </div>
+                  )}
+
+                  {/* Details Grid */}
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <div className="text-xs font-semibold text-emerald-700 uppercase mb-2 flex items-center gap-1">
+                        <div className="w-1 h-4 bg-emerald-600 rounded"></div>
+                        Natural History
+                      </div>
+                      <p className="text-sm text-gray-900 leading-relaxed">{grove.natural_history}</p>
+                    </div>
+
+                    <div>
+                      <div className="text-xs font-semibold text-blue-700 uppercase mb-2 flex items-center gap-1">
+                        <div className="w-1 h-4 bg-blue-600 rounded"></div>
+                        Present Status
+                      </div>
+                      <p className="text-sm text-gray-900">{grove.present_status}</p>
+                    </div>
+
+                    {grove.threats && (
+                      <div>
+                        <div className="text-xs font-semibold text-red-700 uppercase mb-2 flex items-center gap-1">
+                          <div className="w-1 h-4 bg-red-600 rounded"></div>
+                          Threats
+                        </div>
+                        <p className="text-sm text-red-700 whitespace-pre-line">{grove.threats}</p>
+                      </div>
+                    )}
+
+                    {grove.references && (
+                      <div>
+                        <div className="text-xs font-semibold text-gray-700 uppercase mb-2 flex items-center gap-1">
+                          <div className="w-1 h-4 bg-gray-600 rounded"></div>
+                          References
+                        </div>
+                        <p className="text-sm text-gray-700 italic whitespace-pre-line">{grove.references}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            )}
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

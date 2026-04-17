@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search, MapPin, Filter, Calendar, Leaf } from 'lucide-react';
+import { Search, MapPin, Filter, Calendar, Trees } from 'lucide-react';
 
 export const Database = () => {
   const [groves, setGroves] = useState([]);
@@ -213,7 +213,7 @@ export const Database = () => {
         {filteredGroves.length === 0 && !loading && (
           <div className="text-center py-16">
             <div className="text-gray-400 mb-4">
-              <Leaf className="w-16 h-16 mx-auto" />
+              <Trees className="w-16 h-16 mx-auto" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No Sacred Groves Found</h3>
             <p className="text-gray-600">Try adjusting your search or filter criteria</p>
