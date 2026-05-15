@@ -298,12 +298,3 @@ export const DistrictWise = () => {
     </div>
   );
 };
-   </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
