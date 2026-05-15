@@ -18,8 +18,10 @@ export const DistrictWise = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedDistrict) {
+    if (selectedDistrict && selectedDistrict !== 'all') {
       fetchGrovesByDistrict(selectedDistrict);
+    } else if (selectedDistrict === 'all') {
+      fetchAllGroves();
     }
   }, [selectedDistrict]);
 
@@ -54,6 +56,16 @@ export const DistrictWise = () => {
     }
   };
 
+  const fetchAllGroves = async () => {
+    try {
+      const { data } = await axios.get(`${BACKEND_URL}/api/groves`);
+      setGroves(data);
+      setFilteredGroves(data);
+    } catch (error) {
+      console.error('Error fetching groves:', error);
+    }
+  };
+
   const fetchGrovesByDistrict = async (district) => {
     try {
       const { data } = await axios.get(`${BACKEND_URL}/api/groves/by-district/${district}`);
@@ -76,6 +88,39 @@ export const DistrictWise = () => {
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">District Wise SGs</h1>
           <p className="text-lg text-gray-600">Participatory Sacred Grove Database - Maharashtra</p>
+        </div>
+
+        {/* District Statistics Card */}
+        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-md p-6 mb-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Trees className="w-5 h-5 text-emerald-600" />
+            Sacred Groves Distribution Across Districts
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div className="bg-white rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-emerald-600">288</div>
+              <div className="text-xs text-gray-600 mt-1">Total SGs</div>
+            </div>
+            <div className="bg-white rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-blue-600">141</div>
+              <div className="text-xs text-gray-600 mt-1">Pune</div>
+            </div>
+            <div className="bg-white rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-purple-600">71</div>
+              <div className="text-xs text-gray-600 mt-1">Kolhapur</div>
+            </div>
+            <div className="bg-white rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-indigo-600">21</div>
+              <div className="text-xs text-gray-600 mt-1">Thana</div>
+            </div>
+            <div className="bg-white rounded-lg p-3 text-center">
+              <div className="text-2xl font-bold text-teal-600">10</div>
+              <div className="text-xs text-gray-600 mt-1">Districts</div>
+            </div>
+          </div>
+          <div className="mt-3 text-xs text-gray-600 text-center">
+            Other districts: Satara (16), Kolaba (14), Ratnagiri (11), Jalgaon (4), Chandrapur (4), Bhandara (3), Yeotmal (3)
+          </div>
         </div>
 
         {/* Filters Section */}
@@ -138,7 +183,8 @@ export const DistrictWise = () => {
             <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-sm text-gray-600">
                 Showing <span className="font-semibold text-emerald-700">{filteredGroves.length}</span> of{' '}
-                <span className="font-semibold">{groves.length}</span> sacred groves in {selectedDistrict} district
+                <span className="font-semibold">{groves.length}</span> sacred groves
+                {selectedDistrict !== 'all' && <> in <span className="font-semibold">{selectedDistrict}</span> district</>}
               </p>
             </div>
           )}
@@ -244,6 +290,15 @@ export const DistrictWise = () => {
                     )}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+   </div>
               </div>
             ))}
           </div>
